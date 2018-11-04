@@ -12,6 +12,21 @@ var tools = {
 	dialogClose:function(i){
 		document.querySelector('#'+i).parentNode.removeChild(document.querySelector('#'+i))
 	},
+	load:function(){
+		var id = 'loadlog' + Math.round(Math.random() * 9999),
+		div = document.createElement("div");
+		div.setAttribute("id", id)
+		div.setAttribute('class','overlay-mask')
+		div.setAttribute('onclick','tools.loadClose(\''+id+'\')')
+		document.body.appendChild(div);
+		div.innerHTML = '<div class="loadlog" onclick="window.event? window.event.cancelBubble = true : e.stopPropagation();">\
+		<div class="spinner"><div class="cube1"></div><div class="cube2"></div></div>\
+		</div>';
+		return id
+	},
+	loadClose:function(i){
+		document.querySelector('#'+i).parentNode.removeChild(document.querySelector('#'+i))
+	},
 	post:function(url , data , readyFunction){
 		var xmlhttp,sendData = ''
 		for(var index in data){
