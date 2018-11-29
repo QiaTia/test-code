@@ -93,4 +93,13 @@ var tools = {
     }
     return elements
 	}
+    test:function(){
+	for(let i = 1; i<10; i++){
+	 let t = ''
+		for(let j = 1; j<=i; j++){
+			t += j+' X '+i+" = "+i*j+'  '
+		}
+		console.log(t+'\n')
+	}
+}
 }
