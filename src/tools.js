@@ -92,7 +92,7 @@ var tools = {
       elements[tagElements[j].name] = tagElements[j].value; 
     }
     return elements
-	}
+	},
     test:function(){
 	for(let i = 1; i<10; i++){
 	 let t = ''
