@@ -27,7 +27,7 @@ dcReg = /[A-z\/\- (…)]+/
 拆分出来, 发现章节是连在一起的, 那就来一个for循环, 申请两个变量, 当检测到当条数据中包含 'unit'时,把unit变量自增一下, 储存到对象中
 
 ### OK, 到这里也就差不多了, 就剩下把数据发送到数据库了, 简单就好, 我选择了for + post把数据逐条发送给php储存起来
-```
+```JavaScript
 for(item in dcs){
 	$.get('php-url',item,(res)=>{console.log(res)})
 }
@@ -38,7 +38,6 @@ for(item in dcs){
 ```php
 if(isset($_REQUEST['add'])){
 	$stmt = $conn->prepare("INSERT INTO `dc_list` (`i`, `b`, `u`, `dc`, `t`) VALUES (? ,? ,? ,? ,?);");
-  
 	$i= $_REQUEST['dc_i'];
 	$b= $_REQUEST['dc_b'];
 	$u= $_REQUEST['dc_u'];
@@ -51,7 +50,7 @@ if(isset($_REQUEST['add'])){
 		die('失败，请重试 '.$time ."\n" .$e->getMessage());
 	}
 	echo 'I`m OK!'.$time;
-  $stmt->close();
-  $conn->close();
+	$stmt->close();
+	$conn->close();
 }
 ```
