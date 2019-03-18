@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>TestPage!</title>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+  var tools = {
+    post: function (url, data, readyFunction) {
+      var xmlhttp, sendData = ''
+      for (var index in data) {
+        sendData += index + '=' + data[index] + '&'
+      }
+      if (window.XMLHttpRequest) {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp = new XMLHttpRequest()
+      } else {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+      }
+      /*// get
+      	xmlhttp.open("GET","/try/ajax/demo_get.php?t=" + Math.random(),true);
+      	xmlhttp.send();*/
+      xmlhttp.open("POST", url, true)
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+      xmlhttp.send(sendData)
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+          readyFunction(xmlhttp.responseText, xmlhttp.status)
+        }
+      }
+    },
+    get: function (url, data, readyFunction) {
+      var xmlhttp, sendData = '?'
+      for (var index in data) {
+        sendData += index + '=' + data[index] + '&'
+      }
+      if (window.XMLHttpRequest) {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp = new XMLHttpRequest();
+      } else {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+      }
+      xmlhttp.open("GET", url + sendData, true)
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+      xmlhttp.send()
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+          readyFunction(xmlhttp.responseText, xmlhttp.status)
+        }
+      }
+    },
+    formData: function (form) {
+      var form = document.querySelector(form),
+        elements = {},
+        tagElements = form.getElementsByTagName('input')
+      for (var j = 0; j < tagElements.length; j++) {
+        if (tagElements[j].type == 'number' || tagElements[j].type == 'text' || tagElements[j].type == 'mail' ||
+          tagElements[j].type == 'password')
+          elements[tagElements[j].name] = tagElements[j].value
+        else if (tagElements[j].type == 'radio') {
+          if (tagElements[j].checked)
+            elements[tagElements[j].name] = tagElements[j].value
+        }
+      }
+      var tagElements = form.getElementsByTagName('select');
+      for (var j = 0; j < tagElements.length; j++) {
+        elements[tagElements[j].name] = tagElements[j].value;
+      }
+      return elements
+    },
+    test: function () {
+      for (let i = 1; i < 10; i++) {
+        let t = ''
+        for (let j = 1; j <= i; j++) {
+          t += j + ' X ' + i + " = " + i * j + '  '
+        }
+        console.log(t + '\n')
+      }
+    }
+  }
+	// function dcUnit(zz){
+ //    let arr = []
+ //    console.log('unit'+zz)
+ //    tools.get('https://wx.qiatia.cn/yyzs/api/',{unit: 'unit'+zz},(res)=>{
+ //    	let data = eval('(' + res + ')').data,
+ //    		//dcReg = /[A-z]+(?=\[)/i
+ //    		bReg = /\[\D+/,
+ //    		dcReg = /[A-z\/\- (…)]+/
+ //    	for(let item=0, i = 0; item<data.length; item++ , i++){
+ //    		//console.log(item)
+ //    		if (zz=5 || item == 109) continue
+ //    		if (zz=1 || item == 183) continue
+ //    		let d = data[item].name.replace(bReg,'').match(dcReg)[0] || dcReg.exec(data[item].name.replace(bReg,''))[0]
+ //    		if(d == "Unit "){
+ //    			i = 0
+ //    			continue
+ //    		}
+ //    		arr.push({
+ //    			i: i,
+ //    			dc: d,
+ //    			t:data[item].name
+ //    		})
+ //    	}
+ //    	return (JSON.stringify(arr))
+ //    })
+	// }
+	// for (var i = 0; i < 11; i++) {
+	// 	dcUnit(i+1)
+	// }
+	// console.log(dc)
+	let opp = 11,t,temp='',book = ['占位付','必修一','必修二','必修三','必修四','必修五','选修六','选修七','选修八','选修九','选修十','选修十一']
+  tools.get('https://wx.qiatia.cn/yyzs/',{book:opp,dc:''},(res)=>{
+  	t = JSON.parse(res)
+  	for (let i = 0, b = 1, u = ''; i < t.length; i++) {
+  		if (t[i].i == 1) {
+  			u = 'Unit ' + b++
+  			console.log(u,book[opp])
+  		}
+  			//console.log(t[i].i)
+  			t[i].dc_u=u
+  			t[i].dc_b=book[opp]
+  			t[i].dc_i = t[i].i
+  			t[i].dc_dc = t[i].dc
+  			t[i].add = t[i].t
+  			tools.get('https://wx.qiatia.cn/yyzs/',t[i],(res)=>{
+  				console.log(res)
+  			})
+  		//console.log(t[i])
+  	}
+  	// temp = JSON.stringify(t)
+  	// //console.log()
+  	// tools.post('https://wx.qiatia.cn/yyzs/', { all_add:temp }, (res2)=>{
+  	// 	console.log(res2)
+  	// })
+  })
+
+ // 	let t = 0;
+ // function get(){
+ // 	tools.get('https://wx.qiatia.cn/yyzs/',{book:1,dc:''},(res)=>{
+ // 		console.log(t++)
+ // 	})
+ // }
+
+	// setInterval(()=>{
+	// 	get()
+	// }, 100);
+  </script>
+</body>
+
+</html>
