@@ -82,25 +82,37 @@ var tools = {
 		tagElements = form.getElementsByTagName('input')
 		for (var j = 0; j < tagElements.length; j++){
 			if(tagElements[j].type == 'number' || tagElements[j].type == 'text'|| tagElements[j].type == 'mail'|| tagElements[j].type == 'password')
-      	elements[tagElements[j].name] = tagElements[j].value
-      else if(tagElements[j].type == 'radio'){
-      	if(tagElements[j].checked)
-      		elements[tagElements[j].name] = tagElements[j].value
-    	}
-    }
-    var tagElements = form.getElementsByTagName('select');  
-    for (var j = 0; j < tagElements.length; j++){ 
-      elements[tagElements[j].name] = tagElements[j].value; 
-    }
-    return elements
-	},
-    test:function(){
-	for(let i = 1; i<10; i++){
-	 let t = ''
-		for(let j = 1; j<=i; j++){
-			t += j+' X '+i+" = "+i*j+'  '
+		elements[tagElements[j].name] = tagElements[j].value
+	      else if(tagElements[j].type == 'radio'){
+		if(tagElements[j].checked)
+			elements[tagElements[j].name] = tagElements[j].value
 		}
-		console.log(t+'\n')
+	    }
+	    var tagElements = form.getElementsByTagName('select');  
+	    for (var j = 0; j < tagElements.length; j++){ 
+	      elements[tagElements[j].name] = tagElements[j].value; 
+	    }
+	    return elements
+	},
+	tex2voice:function (val, per){
+		per = per?"&per="+per:'';
+		let s =document.createElement('source'),a = document.createElement('audio');
+		s.type ='audio/mp3';
+		s.src = 'https://wx.qiatia.cn/admin/config/?ttsTex='+val+per;
+		a.appendChild(s);
+		a.autoplay = true;
+		let item = 'tia'+ new Date().getTime()
+		a.setAttribute('id',item)
+		document.body.appendChild(a);
+		return document.getElementById(item)
 	}
-}
+	test:function(){
+		for(let i = 1; i<10; i++){
+		 let t = ''
+			for(let j = 1; j<=i; j++){
+				t += j+' X '+i+" = "+i*j+'  '
+			}
+			console.log(t+'\n')
+		}
+	}
 }
