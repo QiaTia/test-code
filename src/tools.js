@@ -95,17 +95,26 @@ var tools = {
 	    return elements
 	},
 	tex2voice:function (val, per){
-		per = per?"&per="+per:'';
-		let s =document.createElement('source'),a = document.createElement('audio');
-		s.type ='audio/mp3';
-		s.src = 'https://wx.qiatia.cn/admin/config/?ttsTex='+val+per;
-		a.appendChild(s);
-		a.autoplay = true;
-		let item = 'tia'+ new Date().getTime()
-		a.setAttribute('id',item)
-		document.body.appendChild(a);
-		return document.getElementById(item)
-	}
+		return new Promise((res,reject)=>{
+			per = per?"&per="+per:'';
+			let s =document.createElement('source'),a = document.createElement('audio');
+			s.type ='audio/mp3';
+			s.src = 'https://wx.qiatia.cn/admin/config/?ttsTex='+val+per;
+			a.appendChild(s);
+			a.autoplay = true;
+			let item = 'tia'+ new Date().getTime()
+			a.setAttribute('id',item)
+			document.body.appendChild(a);
+			let voice = document.getElementById(item)
+			voice.onended = function(){
+			    console.warn('播放完毕,开始销毁=>')
+			    this.parentNode.removeChild(this)
+			}
+			voice.onplay= function(){
+				res()
+			}
+		})
+	},
 	test:function(){
 		for(let i = 1; i<10; i++){
 		 let t = ''
