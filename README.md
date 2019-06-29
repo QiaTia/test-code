@@ -8,9 +8,13 @@
 tools.dialog(msg)
   //return element object
 tools.post(url , data , readyFunction)
-
+// 发送 网络请求
 tools.get(url , data , readyFunction)
-
+// 给一个表单, 获取改表单下输入框的内容, 返回对象
 tools.formData(form)
   //return object
+
+
+# Page
+	平时一些练手的单页面
 ```
