@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Love!!!</title>
+    <style>
+    * {
+        margin: 0px;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100% background-color:skyblue;
+        animation: here 6s 0s linear infinite;
+    }
+
+    #div {
+        position: relative;
+    }
+
+    #div .love {
+        height: 300px;
+        width: 300px;
+        margin: auto;
+    }
+
+    #div .love:after,
+    #div .love:before {
+        position: absolute;
+        content: ' ';
+        width: 100px;
+        height: 150px;
+        background-color: #ff0;
+        border-radius: 50px 50px 0 0;
+    }
+
+    #div .love:after {
+        left: 32px;
+        transform: rotate(-45deg);
+    }
+
+    #div .love:before {
+        left: 68px;
+        transform: rotate(45deg);
+    }
+
+    #div .love:last-of-type {
+        position: absolute;
+        top: 0;
+        left: 200px;
+        animation: cpet 6s 0s linear infinite;
+    }
+
+    #div .love:last-of-type:after,
+    #div .love:last-of-type:before {
+        background-color: skyblue;
+        animation: here 6s 0s linear infinite;
+    }
+
+    @keyframes cpet {
+        100% {
+            left: -200px
+        }
+    }
+
+    @keyframes here {
+        0% {
+            background-color: skyblue;
+        }
+        50% {
+            background-color: black;
+        }
+        100% {
+            background-color: skyblue;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div id='div'>
+        <div class='love'>
+            <div></div>
+            <div></div>
+        </div>
+        <div class='love'>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</body>
+
+</html>
