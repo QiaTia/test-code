@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>流星</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+		}
+		#rain{
+			display: block;
+			background-color: #000; 
+		}
+	</style>
+</head>
+<body>
+    <canvas id="rain"></canvas>
+    <script type="text/javascript">
+    	var can=document.getElementById("rain");
+    	var w = window.innerWidth;
+    	var h = window.innerHeight;
+    	can.width = w;
+    	can.height =h;
+    	window.onresize=function(){
+    		var w = window.innerWidth;
+    		var h = window.innerHeight;
+    		can.width = w;
+    		can.height = h;
+    	}
+    	var canContent=can.getContext("2d");
+    	//canContent.fillStyle="red";
+    	//canContent.fillRect(150,150,100,100);
+    	//canContent.strokeStyle="red";
+    	//canContent.strokeRect(150,150,100,100);//空心矩形
+    	//canContent.arc(400,400,50,0,Math.PI*2);//x,y,r,绘制起始点,绘制终点 园 
+    	//canContent.fill();
+    	//canContent.stroke();
+        /*
+    	var y=0;
+    	setInterval(function(){
+    		//canContent.clearRect(0,0,w,h);
+            canContent.fillStyle = "rgba(0,0,0,0.01)";
+            canContent.fillRect(0,0,w,h);
+    		canContent.fillStyle="#FFF";
+    		canContent.fillRect(150,y++,10,10);
+    	},1000/60);
+        */
+        function Rain(){};
+
+        function random(min,max) {
+            return Math.random()*(max-min)+min;
+        }
+        Rain.prototype = {
+            init:function(){
+                this.x=random(0,w);
+                this.y=0;
+                this.v=random(4,5);//随机移动参数
+                this.h=random(0.8 * h,0.9 * h);
+
+                this.r=1;
+                this.vr=random(1,2);
+
+                this.a=1;
+                this.va=0.96;
+            },
+            draw:function () {
+                if(this.y < this.h){
+                    canContent.fillStyle="#33ffff";
+                    canContent.fillRect(this.x,this.y,2,10);
+                }else{
+                    canContent.strokeStyle="rgba(0,255,255,"+this.a+")";
+                    canContent.beginPath();
+                    canContent.arc(this.x,this.y,this.r,0,Math.PI*2);   //x,y,r,绘制起始点,绘制终点园
+                    canContent.stroke();
+                }
+            },
+            move:function(){
+                if(this.y < this.h){
+                    this.y+=this.v; //移动
+                } else{
+                    if(this.a>0.02){
+                        this.r+=this.vr;
+                        this.a*=this.va;
+                    }
+                    else{
+                        this.init();
+                    }
+                }
+                this.draw();
+            }
+        }
+        var rainArry=[];
+        function createRain(){
+            var rain=new Rain();
+            rain.init();
+            rain.draw();
+            rainArry.push(rain);
+        }
+        //createRain();
+        for (var i = 0; i < 150; i++) {
+            setTimeout(createRain,200*i);
+        }
+        //setInterval(createRain,500);
+        function moveRain(){
+            //console.log(rainArry.length);
+            canContent.fillStyle = "rgba(0,0,0,100)";
+            canContent.fillRect(0,0,this.w,this.h);
+            for (var k=0;k<rainArry.length;k++) {
+                rainArry[k].move();
+            }
+        }
+
+        //setInterval(moveRain,1000/60);
+        function run(){
+            moveRain();
+            setTimeout (run,1000/60);
+        }
+        run();
+    </script>
+</body>
+</html>
