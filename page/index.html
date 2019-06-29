@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小霸王打字机-其乐无穷</title>
+  <style>
+    body{margin:0; padding:0; background-color: #121212; display: flex;}
+    .wrapper{ 
+      flex:1;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: 100vh;
+      text-align:center;
+    }
+    #char{margin-top: 4rem;font-size: 12rem;color: #8BC34A;width: 15.62rem;display: inline-block;box-shadow: 0px 0px 6rem #9e9e9eb8 inset;border-radius: 50%;}
+    .error{ color: #FF4081!important;}
+    #info{display: block;font-size: 1.2rem;color: #9e9e9e;}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div id="char"></div>
+    <foter id="info">正确数:N 错误数: N 正确率:N% </foter>
+  </div>
+  <script>
+    var checkChar = document.getElementById('char'),
+      info = document.getElementById('info'),
+      x , eCount = 0, tCount = 0 , Count = 0
+    function  show() {
+      let a = Math.random(1)*26
+      a = parseInt(a)+65
+      let t = String.fromCharCode(a)
+      checkChar.innerHTML = t
+      return a;
+    }
+    window.onkeydown = function (e) {
+      // console.log(x +''+ e.keyCode)
+      let t = e.keyCode
+      if(x == t){
+        x = show()
+        tCount ++
+      }else{
+        checkChar.className = 'error'
+        setInterval(clernColor, 500)
+        eCount ++
+      }
+      Count ++
+      info.innerText = '正确数:' + tCount + '  错误数: '+eCount+'  正确率:'+ ((tCount/Count)*100).toFixed(2) +'%'
+    }
+    function  clernColor() {
+      checkChar.className = ''
+    }
+    x = show()
+  </script>
+</body>
+</html>
