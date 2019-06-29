@@ -14,7 +14,7 @@ tools.get(url , data , readyFunction)
 tools.formData(form)
   //return object
 
+```
 
 # Page
 	平时一些练手的单页面
-```
